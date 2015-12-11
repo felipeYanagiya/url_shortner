@@ -6,7 +6,7 @@ import spray.json.DefaultJsonProtocol
  * @author felipey.
  */
 
-object LongUrl extends DefaultJsonProtocol {
+object LongUrlProtocol extends DefaultJsonProtocol {
     implicit val format = jsonFormat1(LongUrl.apply)
 }
 
