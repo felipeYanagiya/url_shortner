@@ -1,0 +1,7 @@
+cassandra:
+  image: cassandra:2.1
+  ports:
+    - "9042:9042"
+  volumes:
+    - ".:/var/lib/cassandra"
+    - "./data:/var/lib/cassandra/data"
