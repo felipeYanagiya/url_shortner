@@ -3,6 +3,8 @@ package com.url.dto
 import spray.json.DefaultJsonProtocol
 
 /**
+ * Formatter for input Post json
+ *
  * @author felipey.
  */
 

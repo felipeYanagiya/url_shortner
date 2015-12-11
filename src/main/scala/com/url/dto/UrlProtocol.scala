@@ -3,6 +3,8 @@ package com.url.dto
 import spray.json.DefaultJsonProtocol
 
 /**
+ * Formatter for Url response json
+ *
  * @author felipey.
  */
 object UrlProtocol extends DefaultJsonProtocol {
