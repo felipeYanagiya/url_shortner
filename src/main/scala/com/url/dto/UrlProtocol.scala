@@ -5,12 +5,9 @@ import spray.json.DefaultJsonProtocol
 /**
  * @author felipey.
  */
-object UrlProtocol {
-
+object UrlProtocol extends DefaultJsonProtocol {
+    implicit val format = jsonFormat4(UrlJson.apply)
 }
 
-case class Url(longUrl : String, shortUrl: String, id: String)
+case class UrlJson(longUrl : String, shortUrl: String, id: String, status: String)
 
-object Url extends DefaultJsonProtocol {
-    implicit val format = jsonFormat3(Url.apply)
-}
