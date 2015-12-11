@@ -1,2 +1,9 @@
-.idea
-target
+/.idea/
+/project/boot/
+/project/plugins/project
+target/
+lib_managed/
+src_managed/
+test-output/
+*.iml
+.classpath_nb
