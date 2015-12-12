@@ -4,11 +4,12 @@ import akka.actor.Actor
 import com.datastax.driver.core.Session
 import com.url.commons.utils.cassandra.Connector
 import com.url.dao.UrlDao
-import com.url.dto.{Url, CompleteUrl, LongUrl}
+import com.url.dto.{CompleteUrl, LongUrl, Url}
 import spray.http._
 import spray.routing._
 
-import scala.util.{Failure, Success}
+import scala.concurrent.Await
+import scala.concurrent.duration._
 
 // we don't implement our route structure directly in the service actor because
 // we want to be able to test it independently, without having to spin up an actor
@@ -39,16 +40,11 @@ trait UrlShortnerService extends HttpService {
 
     val myRoute =
         get {
-            path("") {
+            path(Segment) { id =>
                 respondWithMediaType(MediaTypes.`application/json`) {
                     complete {
-                        CompleteUrl("asdadasdasa", "asd", "asd", "sd")
-//                        val result
-//                        urlDao.dao.getById("").onComplete {
-//                            case Success(url) => CompleteUrl(url.get.longUrl, url.get.shortUrl, url.get.id, "OK")
-//                            case Failure(e) => e.getStackTrace
-//                        }
-//                        result
+                        val result = Await.result(urlDao.dao.getById(id), 5.seconds).get
+                        CompleteUrl(result.longUrl, result.shortUrl, result.id, "OK")
                     }
                 }
             }
