@@ -1,7 +1,10 @@
 package com.url.service
 
 import akka.actor.Actor
-import com.url.dto.LongUrl
+import com.datastax.driver.core.Session
+import com.url.commons.utils.cassandra.Connector
+import com.url.dao.UrlDao
+import com.url.dto.{UrlJson, LongUrl}
 import spray.http._
 import spray.routing._
 
@@ -25,12 +28,17 @@ trait UrlShortnerService extends HttpService {
     import com.url.dto.LongUrlProtocol._
     import spray.httpx.SprayJsonSupport._
 
+    val shortUrlService = new ShortUrlService
+    val urlDao = new UrlDao {
+        override def getSession(keySpace: String): Session = ???
+    }
+
     val myRoute =
         get {
-            path("") {
+            path("")  {
                 respondWithMediaType(MediaTypes.`application/json`) {
                     complete {
-                        LongUrl("bla")
+                        LongUrl("")
                     }
                 }
             }

@@ -17,11 +17,11 @@ class UrlShortnerServiceSpec extends Specification with Specs2RouteTest with Url
       }
     }
 
-    "return a MethodNotAllowed error for PUT requests to the root path" in {
-      Post() ~> myRoute ~> check {
-        status === MethodNotAllowed
-        responseAs[String] === "HTTP method not allowed, supported methods: GET"
-      }
-    }
+//    "return a MethodNotAllowed error for PUT requests to the root path" in {
+//      Post() ~> myRoute ~> check {
+////        status === MethodNotAllowed
+////        responseAs[String] === "HTTP method not allowed, supported methods: GET"
+//      }
+//    }
   }
 }

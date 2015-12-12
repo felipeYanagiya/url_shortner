@@ -1,29 +1,44 @@
 package com.url.commons.utils.cassandra
 
-import com.url.dto.ConcreteUrls
-import com.websudos.phantom.connectors.{KeySpaceDef, ContactPoint, ContactPoints}
+import java.net.InetAddress
+
+import com.datastax.driver.core.Cluster
+import com.typesafe.config.ConfigFactory
+import com.websudos.phantom.connectors.{KeySpace, SessionProvider}
+import com.websudos.phantom.dsl.Session
+
+import scala.collection.JavaConversions._
+
 
 /**
- * Object that connects to a Cassandra cluster
+ * Connector to a Cassandra cluster
  *
  * @author felipey.
  */
+trait CassandraConnector extends SessionProvider {
+
+    val config = ConfigFactory.load()
+
+    implicit val space: KeySpace = Connector.keyspace
+
+    val cluster = Connector.cluster
+
+    implicit lazy val session: Session = Connector.session
+}
+
 object Connector {
+    val config = ConfigFactory.load()
 
-    val hosts = Seq("127.0.0.1")
+    val hosts = config.getStringList("cassandra.host")
+    val inets = hosts.map(InetAddress.getByName)
 
+    val keyspace: KeySpace = KeySpace(config.getString("cassandra.keyspace"))
 
-    val Connector = ContactPoints(hosts).keySpace("url")
+    val cluster =
+        Cluster.builder()
+            .addContactPoints(inets)
+            .withCredentials(config.getString("cassandra.username"), config.getString("cassandra.password"))
+            .build()
 
-
+    val session: Session = cluster.connect(keyspace.name)
 }
-
-object Defaults {
-    val connector = ContactPoint.local.keySpace("url")
-}
-
-class UrlShortnerDatabase(val keyspace: KeySpaceDef) extends com.websudos.phantom.db.DatabaseImpl(keyspace) {
-    object users extends ConcreteUrls with keyspace.Connector
-}
-
-object UrlShortnerDatabase extends UrlShortnerDatabase(Defaults.connector)

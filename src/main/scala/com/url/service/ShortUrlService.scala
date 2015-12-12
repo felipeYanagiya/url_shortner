@@ -1,6 +1,6 @@
 package com.url.service
 
-import scalaj.http.{Http, Base64}
+import scalaj.http.Base64
 
 /**
  * Service to short an url address
