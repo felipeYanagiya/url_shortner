@@ -29,6 +29,7 @@ trait UrlShortnerService extends HttpService {
 
     import com.url.dto.CompleteUrlProtocol._
     import com.url.dto.LongUrlProtocol._
+    import com.url.dto.UrlProtocol._
     import spray.httpx.SprayJsonSupport._
 
     val shortUrlService = new ShortUrlService
@@ -59,7 +60,7 @@ trait UrlShortnerService extends HttpService {
                             complete {
                                 val url = shortUrlService.getUrlJson(inputUrl.url)
                                 urlDao.dao.saveOrUpdate(Url(url.id, url.longUrl, url.shortUrl))
-                                CompleteUrl(url.longUrl,url.shortUrl, url.id, null)
+                                Url(url.longUrl,url.shortUrl, url.id)
                             }
                         }
                     }
