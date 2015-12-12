@@ -31,7 +31,7 @@ class ShortUrlService {
     def generateShortId(longUrl: String, encodedId : String): String = {
         //TODO clean this by using constants or think on a better solution
         val urls = longUrl.split('.')
-        val firstHalf = urls(1).substring(0, 0)
+        val firstHalf = urls(1).head
         val secondHalf = urls(2).substring(0, 1)
         urls(0) + "." + firstHalf + "." + secondHalf + "/" + Base64.encodeString(longUrl)
     }

@@ -59,8 +59,9 @@ trait UrlShortnerService extends HttpService {
                         respondWithMediaType(MediaTypes.`application/json`) {
                             complete {
                                 val url = shortUrlService.getUrlJson(inputUrl.url)
-                                urlDao.dao.saveOrUpdate(Url(url.id, url.longUrl, url.shortUrl))
-                                Url(url.longUrl,url.shortUrl, url.id)
+                                val result = Url(url.id, url.longUrl, url.shortUrl)
+                                urlDao.dao.saveOrUpdate(result)
+                                result
                             }
                         }
                     }
