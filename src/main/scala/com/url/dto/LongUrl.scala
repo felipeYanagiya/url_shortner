@@ -7,13 +7,10 @@ import spray.json.DefaultJsonProtocol
  *
  * @author felipey.
  */
+case class LongUrl(url: String)
 
 object LongUrlProtocol extends DefaultJsonProtocol {
     implicit val format = jsonFormat1(LongUrl.apply)
-}
-
-case class LongUrl(url: String) {
-
 }
 
 

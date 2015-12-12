@@ -37,6 +37,7 @@ object Connector {
     val cluster =
         Cluster.builder()
             .addContactPoints(inets)
+            .withClusterName(config.getString("cassandra.clustername"))
             .withCredentials(config.getString("cassandra.username"), config.getString("cassandra.password"))
             .build()
 

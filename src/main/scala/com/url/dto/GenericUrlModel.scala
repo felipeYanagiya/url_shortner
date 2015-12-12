@@ -1,11 +1,8 @@
 package com.url.dto
 
 import com.websudos.phantom.CassandraTable
-import com.websudos.phantom.connectors.RootConnector
-import com.websudos.phantom.dsl.{Row, ConsistencyLevel, ResultSet, StringColumn}
-import com.websudos.phantom.keys.{PrimaryKey, PartitionKey}
-
-import scala.concurrent.Future
+import com.websudos.phantom.dsl.{Row, StringColumn}
+import com.websudos.phantom.keys.PrimaryKey
 
 /**
  * Define commons fields for url table

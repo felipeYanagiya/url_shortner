@@ -1,5 +1,7 @@
 package com.url.service
 
+import com.url.dto.{Url, CompleteUrl}
+
 import scalaj.http.Base64
 
 /**
@@ -17,13 +19,19 @@ class ShortUrlService {
 
     }
 
-    def shortUrlAddress(longUrl: String): String = {
+    def getUrlJson(longUrl: String): CompleteUrl = {
         validateUrl(longUrl)
 
+        val encodedId = Base64.encodeString(longUrl)
+        val shortUrl = generateShortId(longUrl, encodedId)
+
+        CompleteUrl(longUrl, shortUrl, encodedId, null)
+    }
+
+    def generateShortId(longUrl: String, encodedId : String): String = {
         val urls = longUrl.split('.')
         val firstHalf = urls(1).substring(0)
         val secondHalf = urls(2).substring(0, 1)
-
         urls(0) + firstHalf + "." + secondHalf + "/" + Base64.encodeString(longUrl)
     }
 

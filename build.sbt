@@ -21,9 +21,6 @@ resolvers ++= Seq(
     Resolver.bintrayRepo("websudos", "oss-releases")
 )
 
-libraryDependencies ++= Seq(
-)
-
 libraryDependencies ++= {
     val akkaV = "2.3.9"
     val sprayV = "1.3.3"
@@ -35,6 +32,7 @@ libraryDependencies ++= {
         "io.spray" %% "spray-routing" % sprayV,
         "io.spray" %% "spray-testkit" % sprayV % "test",
         "io.spray" %% "spray-json" % "1.3.1",
+        "io.spray" % "spray-routing-shapeless2_2.11" % "1.3.3",
         "com.websudos" %% "phantom-dsl" % PhantomVersion,
         "com.websudos" %% "phantom-testkit" % PhantomVersion % "test, provided",
         "org.json4s" %% "json4s-native" % Json4sVersion,

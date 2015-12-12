@@ -4,7 +4,7 @@ import akka.actor.Actor
 import com.datastax.driver.core.Session
 import com.url.commons.utils.cassandra.Connector
 import com.url.dao.UrlDao
-import com.url.dto.{UrlJson, LongUrl}
+import com.url.dto.{CompleteUrl, LongUrl}
 import spray.http._
 import spray.routing._
 
@@ -25,34 +25,35 @@ class UrlShortnerActor extends Actor with UrlShortnerService {
 // this trait defines our service behavior independently from the service actor
 trait UrlShortnerService extends HttpService {
 
+    import com.url.dto.CompleteUrlProtocol._
     import com.url.dto.LongUrlProtocol._
     import spray.httpx.SprayJsonSupport._
 
     val shortUrlService = new ShortUrlService
     val urlDao = new UrlDao {
-        override def getSession(keySpace: String): Session = ???
+        override def getSession(keySpace: String): Session = cluster.connect(Connector.keyspace.name)
     }
 
     val myRoute =
         get {
-            path("")  {
+            path("") {
                 respondWithMediaType(MediaTypes.`application/json`) {
                     complete {
-                        LongUrl("")
+                        CompleteUrl("asdadasdasa","asd","asd","sd")
                     }
                 }
             }
         } ~
-       post {
-           path("") {
-               entity(as[LongUrl]) { longUrl =>
-                   respondWithMediaType(MediaTypes.`application/json`) {
-                       complete {
-                           LongUrl(longUrl.url)
-                       }
-                   }
-               }
-           }
+            post {
+                path("") {
+                    entity(as[LongUrl]) { longUrl =>
+                        respondWithMediaType(MediaTypes.`application/json`) {
+                            complete {
+                                LongUrl(longUrl.url)
+                            }
+                        }
+                    }
+                }
 
-       }
+            }
 }
